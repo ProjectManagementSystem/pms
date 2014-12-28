@@ -1,15 +1,13 @@
 import MySQLdb
 
-host=""
-user=""
-passwd=""
-db=""
+from logindb import loginread as info
 
-def login(username, password):
-    db = MySQLdb.connect(host="localhost", # your host, usually localhost
-                         user="john", # your username
-                          passwd="megajonhy", # your password
-                          db="jonhydb") # name of the data base
+
+def login(email, password):
+    db = MySQLdb.connect(host=info.host , # your host, usually localhost
+                         user=info.username, # your username
+                          passwd=info.password, # your password
+                          db=info.db) # name of the data base
 
 
 
@@ -18,12 +16,11 @@ def login(username, password):
     cur = db.cursor() 
 
     # Use all the SQL you like
-    cur.execute("SELECT USERNAME FROM USERS WHERE @USERNAME = USERNAME".replace("@USERNAME",username))
+    cur.execute("SELECT password FROM USERS WHERE '@email' = email".replace("@email",email))
 
-    # print all the first cell of all the rows
-    for row in cur.fetchall() :
-        if password==row.password:
-            True
-        else password=!row.password:
-            False
-    
+    if password == cur.fetchall()[0][0]:
+        db.close()
+        return True
+    else:
+        db.close()
+        return False
