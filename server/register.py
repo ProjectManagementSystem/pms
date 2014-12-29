@@ -27,10 +27,12 @@ def guid(*args):
     return data[:8]
 """
 # var size limits: userid => [8]??, name - surname - phone - facebookid => char[128], password => char[512] primarykey (userid)
+from logindb import loginwrite as info
+
 
 def register (u_name, u_surname, u_mail, u_pass, u_phone, u_facebookid, u_regdate):
     # connect to database, send the params
-    db = MySQLdb.connect(host = "localhost", user = "Doruk", passwd = "bestpassever", db = "pms")
+    db = MySQLdb.connect(host =  info.host, user = info.username , passwd = info.password , db = info.db)
     # can take queries now
     cur = db.cursor()
     # first, try to insert this info to the database
