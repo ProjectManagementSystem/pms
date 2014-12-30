@@ -37,8 +37,9 @@ def not_found(error):
 
 @flask_app.route('/api/v1.0/<string:mainFunction>/<string:subFunction>/')
 def APIStart( mainFunction, subFunction ):
+    
     if not request.json:
-        abort(404)
+        return HandleError(10001)
         
     func_list = [("account",account),("organization",organization)]
     for f in func_list:
@@ -74,7 +75,7 @@ def account_login():
     password = request.json['password']
     if( len(username) == 0 or
         len(password) == 0):
-        HandleError( "Username or password is empty" )
+        return HandleError( 1000 )
         
         
     import login
@@ -90,7 +91,7 @@ def account_logout():
     
 
 def HandleError( dest_error ):
-    return "error.."
+    return jsonify( { 'error': dest_error } ), 201
 
 
 if __name__ == '__main__':
