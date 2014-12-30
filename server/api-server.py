@@ -22,6 +22,18 @@ http://localhost:5000/api/v1.0/organization/update
 """
 
 
+"""
+##thanks anil selim surmeli for his contributions##
+
+@app.route('/userId/<user_id>')
+def get_userId(user_id):
+	user_name = get_user_name(user_id)
+    return json.dumps({'userId': userId, 'userName': user_name})
+
+##thanks anil selim surmeli for his contributions##
+"""
+
+
 from flask import Flask, jsonify, abort, request, make_response, url_for
 
 flask_app = Flask(__name__)
