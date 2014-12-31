@@ -8,4 +8,4 @@ Our open-source work has a different approach to project management systems. I w
 
 -Files in client-mobile/Android are the Android mobile client source codes. Further information is expected to be given by Yigit Yol.
 
-Please see the wiki page at the right menu for our layers, functions and any details. If there's something you know and it's not on the wiki, we'd appreciate it if you add it.
+Please see the wiki page at the right menu for our layers, functions and any details. If there's something you know and it's not on the wiki, we'd appreciate if you add it.
