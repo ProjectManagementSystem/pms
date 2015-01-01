@@ -34,7 +34,7 @@ def get_userId(user_id):
 """
 
 
-from flask import Flask, jsonify, abort, request, make_response, url_for
+from flask import Flask, jsonify, abort, request, make_response, url_for, session
 
 flask_app = Flask(__name__)
 
@@ -107,4 +107,5 @@ def HandleError( dest_error ):
 
 
 if __name__ == '__main__':
+    flask_app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT' #secret?
     flask_app.run(debug=True)
