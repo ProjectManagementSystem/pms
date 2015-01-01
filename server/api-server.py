@@ -4,7 +4,7 @@ http://localhost:5000/api/v1.0/<main_function>/<sub_function>/
 
 
 
-@brief          checks username, password and crate a session
+@brief          checks email, password and crate a session
 http://localhost:5000/api/v1.0/account/login
 
 @brief          clear the sessions
@@ -28,7 +28,7 @@ http://localhost:5000/api/v1.0/organization/update
 @app.route('/userId/<user_id>')
 def get_userId(user_id):
 	user_name = get_user_name(user_id)
-    return json.dumps({'userId': userId, 'userName': user_name})
+    return json.dumps({'userId': userId, 'email': user_name})
 
 ##thanks anil selim surmeli for his contributions##
 """
@@ -82,24 +82,26 @@ def t_function():
 
 def account_login():
     
-    
-    username = request.json['username']
+    if( not 'email' in request.json or
+       not 'password' in request.json):
+        return HandleError( 1002 )
+    email = request.json['email']
     password = request.json['password']
-    if( len(username) == 0 or
+    if( len(email) == 0 or
         len(password) == 0):
         return HandleError( 1000 )
         
         
     import login
-    res = login.login(username,password)
+    res = login.login(email,password)
     if( res == True ):
-        session['username'] = username
+        session['email'] = email
         return jsonify( { 'login': "True" } ), 201
     else:
         return jsonify( { 'login': "False" } ), 201
 
 def account_logout():
-    session.pop('username', None)
+    session.pop('email', None)
     
 
 def HandleError( dest_error ):

@@ -1,7 +1,7 @@
 win:
-curl.exe -i -H "Content-Type: application/json" -X GET -d "{"""username""":"""a""","""password""":"""123"""}" http://localhost:5000/api/v1.0/account/login/
+curl.exe -i -H "Content-Type: application/json" -X GET -d "{"""email""":"""a""","""password""":"""123"""}" http://localhost:5000/api/v1.0/account/login/
 linux:
-curl -i -H "Content-Type: application/json" -X GET -d "{"""username""":"""a""","""password""":"""123"""}" http://localhost:5000/api/v1.0/account/login/
+curl -i -H "Content-Type: application/json" -X GET -d "{"""email""":"""a""","""password""":"""123"""}" http://localhost:5000/api/v1.0/account/login/
 
 result:
 
