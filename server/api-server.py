@@ -62,7 +62,7 @@ def APIStart( mainFunction, subFunction ):
 
 
 def account(subFunction):
-    func_list = [("login",account_login),("register",t_function), ("logout",account_logout)]
+    func_list = [("login",account_login),("register",account_register), ("logout",account_logout)]
     for f in func_list:
         if( f[0] == subFunction ):
             return f[1]()
@@ -79,12 +79,35 @@ def organization(subFunction):
 
 def t_function():
     return "still has a lot of things to do."
+def account_register():
+#test: curl -i -H "Content-Type: application/json" -X GET -d "{"""u_name""":"""test12""","""u_surname""":"""test3""","""u_mail""":"""test3""","""u_pass""":"""test3""","""u_phone""":"""test3""","""u_facebookid""":"""test3"""}" http://localhost:5000/api/v1.0/account/register/
 
+    if( not 'u_name' in request.json or
+       not 'u_surname' in request.json or
+       not 'u_mail' in request.json or
+       not 'u_pass' in request.json or
+       not 'u_phone' in request.json or
+       not 'u_facebookid' in request.json ):
+        return HandleError( 1002 )    
+    u_name = request.json['u_name']
+    u_surname = request.json['u_surname']
+    u_mail = request.json['u_mail']
+    u_pass = request.json['u_pass']
+    u_phone = request.json['u_phone']
+    u_facebookid = request.json['u_facebookid']
+    import register
+    res = register.register(u_name,u_surname,u_mail,u_pass,str(u_phone),u_facebookid)
+    if( res == True ):
+        return jsonify( { 'register': "True" } ), 201
+    else:
+        return jsonify( { 'register': "False" } ), 201
+    
 def account_login():
     
     if( not 'email' in request.json or
        not 'password' in request.json):
         return HandleError( 1002 )
+    
     email = request.json['email']
     password = request.json['password']
     if( len(email) == 0 or
