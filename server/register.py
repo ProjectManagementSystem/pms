@@ -14,14 +14,18 @@ def register (u_name, u_surname, u_mail, u_pass, u_phone, u_facebookid):
     # first, try to insert this info to the database
 
     if debug:
-        cur.execute("""INSERT INTO USERS(NAME, SURNAME, EMAIL, PASSWORD, PHONE, FACEBOOKID)
-                                   VALUES(%s, %s, %s, %s, %s, %s)""", (u_name, u_surname, u_mail, u_pass, u_phone, u_facebookid))
-        db.commit()
-    else:
-        try:
+        if not cur.execute("SELECT (1) FROM USERS WHERE EMAIL = %s", (u_mail)):
             cur.execute("""INSERT INTO USERS(NAME, SURNAME, EMAIL, PASSWORD, PHONE, FACEBOOKID)
                                        VALUES(%s, %s, %s, %s, %s, %s)""", (u_name, u_surname, u_mail, u_pass, u_phone, u_facebookid))
             db.commit()
+        else:
+            print "Same email encountered, nothing added."
+    else:
+        try:
+            if not cur.execute("SELECT (1) FROM USERS WHERE EMAIL = %s", (u_mail)):
+                cur.execute("""INSERT INTO USERS(NAME, SURNAME, EMAIL, PASSWORD, PHONE, FACEBOOKID)
+                                       VALUES(%s, %s, %s, %s, %s, %s)""", (u_name, u_surname, u_mail, u_pass, u_phone, u_facebookid))
+                db.commit()
         except:
             db.rollback()
             return False
