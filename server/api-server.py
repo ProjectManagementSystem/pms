@@ -55,12 +55,20 @@ def APIStart( mainFunction, subFunction ):
         
     func_list = [("account",account),("organization",organization)]
     for f in func_list:
-        if( f[0] == mainFunction ):
-            return f[1]( subFunction )
+        if( f[0] == mainFunction  ):
+            bAuthorityError = checkAuthority( mainFunction, subFunction )
+            if( bAuthorityError == 0 ):
+                return f[1]( subFunction )
+            else:
+                return HandleError( bAuthorityError )
             
     return abort(404)
-
-
+def checkAuthority(m,s):
+    #m = mainFunction
+    #s = subFunction
+    if( not 'email' in sessions ):
+        return 10005 #Requires authentication
+    return 0 # we need "permissions" table for checking
 def account(subFunction):
     func_list = [("login",account_login),("register",account_register), ("logout",account_logout)]
     for f in func_list:
